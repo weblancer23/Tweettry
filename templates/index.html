@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Feed Finder</title>
+	<script src="/static/jquery.js" type="text/javascript"></script>
+	<script src="/static/backbone/test/vendor/json2.js" type="text/javascript"></script>
+	<script src="/static/backbone/test/vendor/underscore.js" type="text/javascript"></script>
+	<script src="/static/backbone/backbone.js" type="text/javascript"></script>
+	<script src="/static/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+
+	<link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="/static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+	<link href="/static/style.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=252239411565449";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+	
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="javascript:void()">Feed Finder</a>
+				<form class="navbar-search pull-left tweet-search">
+					<input type="text" class="search-query" placeholder="Search">
+					<input checked="checked" type="checkbox" name='cb-twitter' value=""> Twitter
+					<input type="checkbox" name="cb-facebook"> Facebook
+				</form>
+				<ul class="nav pull-right">
+                      <li><a href="/team" href="javascript:void(0)">About Us</a></li>
+                </ul>
+			</div>
+		</div>
+	</div>
+	<div class="container main">
+		<div class="row">
+			<div class="span2 sidebar-history">
+				<ul class="nav nav-list search-list">
+		            <li class="nav-header">Search History</li>
+		      	</ul>
+		    </div>
+			<div class="span7">
+				<h4 class="title"></h4>
+				<div id="results" class="twitter-feed">
+					<ul id="tweets" class="unstyled tweets-result"/>
+				</div>
+			</div>
+			<div class="span1 sidebar-social">
+				<div class="fb-login-button" data-show-faces="true" data-scope="user_about_me,publish_stream,read_stream" data-width="200" data-max-rows="1"></div>
+				<div class="fb-facepile" data-href="http://twitfagoo.appspot.com/home" data-action="like" data-max-rows="1" data-width="300"></div>
+				<div class="fb-like" data-href="http://twitfagoo.appspot.com/home" data-send="true" data-width="320" data-show-faces="true"></div>
+				<div class="fb-comments" data-href="http://twitfagoo.appspot.com/home" data-num-posts="4" data-width="320"></div>
+			</div>
+		</div>
+
+	</div>
+
+ 	<script type="text/html" id="search-item-view">
+        <a class='item' href="javascript:void(0)"> <%= query %> <%= type %> </a>
+    </script>
+
+ 	<script type="text/html" id="tweet-view">
+ 		<li class="tweet-item">
+		 	<%= text %> - <%= created_at %> 
+	 	</li>
+    </script>
+
+ 	<script type="text/html" id="tweet-view-pic">
+ 		<li class="tweet-item well">
+ 			<div style="width: 100%;">
+	 			<div class="pull-left">
+		 			<img src="<%= profile_image_url %>"></img>
+	 			</div>
+	 			<div class="pull-left">
+				 	<p><%= text %></p>
+				 	<%= relative_time %>
+	 			</div>
+ 			</div>
+	 	</li>
+    </script>
+    <script type="text/html" id="tweet-view-new">
+		<li>
+			<div class="profile-pic"><a target="_blank" href="http://twitter.com/<%= from_user %>"><img class="author_image" src="<%= profile_image_url %>" alt=""></a></div>
+			<div class="tweet-body">
+				<div class="twitter-name"><a class="twitter-name-link" target="_blank" href="http://twitter.com/<%= from_user %>"><%= from_user %></a>&nbsp;&nbsp;<span></span></div>
+				<div class="tweet"><%= text %><<a target="_blank" href="http://twitter.com/<%= from_user %>">@<%= from_user %></a></div>
+				<div class="actions">
+					<span class="icon tweet-icon"></span><%= relative_time %>&nbsp;&nbsp;&nbsp;
+					<a target="_blank" href="javascript:void(0)" class="tweet-reply" title=""> Reply </a>&nbsp;&nbsp;&nbsp;
+					<a target="_blank" href="javascript:void(0)" class="tweet-retweet" title=""> Retweet </a>&nbsp;&nbsp;&nbsp;
+					<a target="_blank" class="tweet-favorite" title=""> Favorite </a>
+				</div>
+			</div>
+			<div class="icon-pic"><img class="author_image" src="/static/icon-twitter.png" alt=""></div>
+		</li>
+    </script>
+    <script type="text/html" id="fb-feed-view">
+		<li>
+			<div class="profile-pic"><a target="_blank" href="http://facebook.com/<%= from.id %>"><img class="author_image" src="http://graph.facebook.com/<%= from.id %>/picture" alt=""></a></div>
+			<div class="tweet-body">
+				<div class="twitter-name"><a class="twitter-name-link" target="_blank" href="http://facebook.com/<%= from.id %>"><%= from.name %></a>&nbsp;&nbsp;<span></span></div>
+				<a href="http://facebook.com/<%= id %>"><div class="tweet"><%= text %></div></a>
+			</div>
+			<div class="icon-pic"><img class="author_image" src="/static/icon-fb.png" alt=""></div>
+		</li>
+    </script>
+
+
+
+ 	<script type="text/html" id="tweet-view-two">
+	    <li class="tweet">
+	            <span>
+	 
+	                <div class="head">
+	                    <img class="pic" src="<%= profile_image_url %>" />
+	                    <p class="userId"><%= "@" + from_user %></p>
+	                 </div>
+	 
+	                 <div class="tail">
+	                    <p><%= text %></p>
+	                    <p class="created"><%= created_at %></p>
+	                 </div>
+	                 <hr />
+	            </span>
+	   </li> 
+    </script>
+
+	<script src="/static/app.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+.container.main {
+	position: relative;
+	top: 70px;
+	height: 500px;
+
+}
+.container.main .span8{
+	height: 500px;
+	overflow-y: auto;
+}
+
+#results { padding:35px 0; padding-bottom:250px; }
+	#results DIV.title { font-weight:bold; font-size:15px; }
+	#results UL#tweets { position:relative; margin-left:-5px; }
+		#results UL#tweets LI { overflow:hidden; margin-bottom:10px; padding:5px 0 5px 5px; }
+		#results UL#tweets LI:hover { background:url(images/bg.gif); }
+			#results UL#tweets LI DIV.profile-pic { float:left; border:1px solid #e5e5e1; margin-right:8px; position:relative; }
+				#results UL#tweets LI DIV.profile-pic IMG { display:block; margin:1px;width:48px;height:48px; }
+			#results UL#tweets LI DIV.tweet-body { overflow:hidden; }
+				#results UL#tweets LI DIV.tweet-body DIV.twitter-name { font-weight:bold; color:#0066cc; font-size:13px; margin-top:2px; }
+				#results UL#tweets LI DIV.tweet-body DIV.twitter-name a {font-weight:bold; color:#0066cc; font-size:13px;text-decoration:none;}
+					#results UL#tweets LI DIV.tweet-body DIV.twitter-name SPAN { font-weight:normal; color:#8d8d8d; margin-bottom:5px; }
+				#results UL#tweets LI DIV.tweet-body DIV.tweet { color:#2f2f2f; font-size:13px; margin-bottom:7px; }
+				#results UL#tweets LI DIV.tweet-body DIV.tweet a {color:#2f2f2f;text-decoration:underline}
+#results UL#tweets LI DIV.tweet-body DIV.actions { font-size:11px; }
+					#results UL#tweets LI DIV.tweet-body DIV.actions A { display:inline-block; color:#8d8d8d; text-decoration:none; }
+					#results UL#tweets LI DIV.tweet-body DIV.actions A:hover { opacity:.8; }
+					#results UL#tweets LI DIV.tweet-body DIV.actions SPAN.icon { display:inline-block; vertical-align:top; margin-right:3px; }
+					#results UL#tweets LI DIV.tweet-body DIV.actions SPAN.icon.tweet-icon { background:url(../images/png.png) 0 -396px; width:16px; height:12px; }
+					#results UL#tweets LI DIV.tweet-body DIV.actions SPAN.icon.reply-icon { background:url(../images/png.png) -26px -396px; width:11px; height:12px; }
+					#results UL#tweets LI DIV.tweet-body DIV.actions SPAN.icon.retweet-icon { background:url(../images/png.png) -46px -396px; width:14px; height:8px; margin-top:2px; }
+					#results UL#tweets LI DIV.tweet-body DIV.actions SPAN.icon.favorite-icon { background:url(../images/png.png) -70px -396px; width:15px; height:15px; position:relative; margin-top:-2px; }
+					
+					
+					#loader { padding-top:50px; }
+						#loader DIV.more-button { width:140px; height:44px; background:url(../images/png.png) 0 -421px; color:#434342; font-size:15px; line-height:40px; cursor:pointer; display:inline-block; }
+							#loader DIV.more-button:hover { background:url(../images/png.png) -152px -421px; }
+						#loader IMG { vertical-align:top; position:relative; margin-top:-10px; margin-right:6px; }
